@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- CRITICAL: Ensures responsiveness across all devices -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- SEO and Branding -->
+    <title>Ebin Sebastian Jiji — Student, Creative Director & Innovator</title>
+    <meta name="description" content="A personal portfolio website of Ebin Sebastian Jiji, a 12th-grade student and Creative Director from Kannur, Kerala. Showcasing creativity, projects, and digital work.">
+    <meta name="theme-color" content="#0A0A0A">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome (for icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts: Poppins (Optimized for readability) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* Define the Neon Blue Theme */
+        :root {
+            --bg-dark: #0A0A0A;
+            --primary-accent: #00BFFF; /* Neon Blue */
+            --secondary-accent: #FFFFFF;
+            --hover-accent: #00E5FF; /* Lighter Neon */
+            --glow-shadow: 0 0 10px var(--primary-accent), 0 0 20px var(--primary-accent);
+            --text-glow: 0 0 2px var(--primary-accent);
+        }
+
+        /* Custom Tailwind Configuration - Defining colors/shadows */
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'neon': 'var(--primary-accent)',
+                        'neon-hover': 'var(--hover-accent)',
+                        'bg-dark': 'var(--bg-dark)',
+                    },
+                    boxShadow: {
+                        'neon': 'var(--glow-shadow)',
+                    }
+                }
+            }
+        }
+
+        /* --- GLOBAL STYLES --- */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--secondary-accent);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Ensure sections use relative padding for fluid heights */
+        section {
+            padding: 5rem 0; /* Reduced vertical padding for mobile, increased below */
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (min-width: 640px) {
+            section {
+                padding: 8rem 0; /* Standard padding on desktop */
+            }
+        }
+        
+        /* --- UTILITY CLASSES & MIXINS --- */
+        .neon-text {
+            color: var(--primary-accent);
+            text-shadow: var(--text-glow);
+        }
+
+        .neon-border {
+            border: 1px solid var(--primary-accent);
+            box-shadow: 0 0 5px var(--primary-accent) inset;
+        }
+
+        /* Touch-friendly glow and interaction */
+        .glow-on-hover {
+            transition: all 0.3s ease;
+            box-shadow: none;
+            will-change: transform, box-shadow;
+            /* Ensure good touch target size */
+            min-height: 48px; 
+        }
+
+        /* Consistent hover/focus style */
+        .glow-on-hover:hover, 
+        .glow-on-hover:focus-visible {
+            background-color: rgba(0, 191, 255, 0.1);
+            box-shadow: var(--glow-shadow);
+            transform: translateY(-2px);
+            outline: none; /* Handled by ring */
+        }
+        
+        /* --- HERO SECTION ANIMATIONS --- */
+        #hero-text { opacity: 0; transform: translateY(20px); transition: all 1s ease-out; }
+        #hero-buttons a { opacity: 0; transform: translateY(10px); transition: all 0.5s ease-out; }
+
+        .hero-loaded #hero-text { opacity: 1; transform: translateY(0); }
+        .hero-loaded #hero-buttons a:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 1.2s; }
+        .hero-loaded #hero-buttons a:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 1.4s; }
+
+        /* --- SCROLL REVEAL (Intersection Observer) --- */
+        .reveal-item {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease-out, transform 1s cubic-bezier(0.2, 0.5, 0.2, 1);
+            will-change: opacity, transform;
+        }
+
+        .reveal-item.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom Spinner for Button */
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            width: 1.5rem;
+            height: 1.5rem;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-bg-dark text-white">
+
+    <!-- 1. WELCOME SCREEN (HERO SECTION) -->
+    <section id="hero" class="h-screen py-0 relative overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <!-- Subtle Glowing Particle Effect (Optimized for low-intensity ambient background) -->
+            <div class="w-96 h-96 rounded-full bg-neon opacity-10 absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 blur-3xl animate-pulse"></div>
+            <div class="w-80 h-80 rounded-full bg-neon opacity-5 absolute bottom-1/4 right-1/4 translate-x-1/2 -translate-y-1/2 blur-3xl animate-pulse-slow"></div>
+        </div>
+
+        <div class="container mx-auto px-4 sm:px-6 max-w-4xl text-center relative z-10">
+            <div id="hero-text" class="space-y-3 sm:space-y-4">
+                <h1 class="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight" style="line-height: 1.1;">
+                    Hi, I’m <span class="neon-text">Ebin Sebastian Jiji</span>
+                </h1>
+                <p class="text-xl sm:text-2xl font-light text-gray-400">
+                    Student • Creative Director • Innovator
+                </p>
+                <p class="text-lg sm:text-xl font-medium text-white pt-2">
+                    From <span class="neon-text">Kannur, Kerala</span> — God’s Own Country
+                </p>
+            </div>
+
+            <div id="hero-buttons" class="mt-10 sm:mt-12 flex flex-col sm:flex-row justify-center gap-4 sm:gap-6">
+                <a href="#projects" class="glow-on-hover w-full sm:w-auto px-8 py-3 rounded-xl font-semibold bg-neon-hover text-bg-dark hover:bg-neon-hover border border-neon transition-all duration-300 shadow-lg shadow-neon/50 focus:ring-4 focus:ring-neon/50" aria-label="View Ebin's Portfolio Projects">
+                    <i class="fas fa-layer-group mr-2"></i> View My Work
+                </a>
+                <a href="#about" class="glow-on-hover w-full sm:w-auto px-8 py-3 rounded-xl font-semibold bg-transparent text-white neon-border hover:bg-neon/10 transition-all duration-300 focus:ring-4 focus:ring-neon/50" aria-label="Learn more about Ebin Sebastian Jiji">
+                    <i class="fas fa-user-circle mr-2"></i> About Me
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. ABOUT SECTION -->
+    <section id="about" class="bg-gray-900 reveal-item">
+        <div class="container mx-auto px-4 sm:px-6 max-w-4xl text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-10 neon-text">About Me</h2>
+
+            <div class="flex flex-col md:flex-row items-center justify-center gap-6 sm:gap-10 p-6 sm:p-8 rounded-2xl bg-gray-800/50 reveal-item">
+                <!-- Profile Photo -->
+                <div class="w-32 h-32 flex-shrink-0 rounded-full overflow-hidden neon-border p-1 reveal-item" style="transition-delay: 0.2s;">
+                    <img src="https://ebnn.xyz/pfp.png" 
+                         alt="Ebin Sebastian Jiji Profile Photo" 
+                         onerror="this.onerror=null;this.src='https://placehold.co/128x128/000/fff?text=PFP';" 
+                         class="w-full h-full object-cover rounded-full transition-transform duration-300 hover:scale-110">
+                </div>
+
+                <!-- Bio Text -->
+                <div class="md:text-left text-center reveal-item" style="transition-delay: 0.4s;">
+                    <p class="text-lg sm:text-xl leading-relaxed text-gray-300">
+                        <span id="typing-text" class="font-medium text-white"></span>
+                        <span class="cursor">|</span>
+                    </p>
+                    <p class="text-sm mt-3 text-gray-400">
+                        Passionate about creativity, technology, and digital media. I love building ideas into reality.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. SKILLS SECTION -->
+    <section id="skills" class="reveal-item">
+        <div class="container mx-auto px-4 sm:px-6 max-w-6xl">
+            <h2 class="text-4xl md:text-5xl font-bold mb-12 text-center neon-text">My Skills</h2>
+
+            <!-- Responsive Grid Layout -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
+                <!-- Skill Card 1 (Repeatable structure) -->
+                <div class="reveal-item p-4 sm:p-6 rounded-xl bg-gray-800/70 border border-gray-700/50 text-center hover:shadow-neon glow-on-hover flex flex-col items-center justify-center" style="transition-delay: 0.1s;">
+                    <i class="fas fa-lightbulb text-3xl sm:text-4xl neon-text mb-3"></i>
+                    <h3 class="text-sm sm:text-lg font-semibold text-white">Creative Direction</h3>
+                </div>
+                <div class="reveal-item p-4 sm:p-6 rounded-xl bg-gray-800/70 border border-gray-700/50 text-center hover:shadow-neon glow-on-hover flex flex-col items-center justify-center" style="transition-delay: 0.2s;">
+                    <i class="fas fa-palette text-3xl sm:text-4xl neon-text mb-3"></i>
+                    <h3 class="text-sm sm:text-lg font-semibold text-white">Graphic Design</h3>
+                </div>
+                <div class="reveal-item p-4 sm:p-6 rounded-xl bg-gray-800/70 border border-gray-700/50 text-center hover:shadow-neon glow-on-hover flex flex-col items-center justify-center" style="transition-delay: 0.3s;">
+                    <i class="fas fa-code text-3xl sm:text-4xl neon-text mb-3"></i>
+                    <h3 class="text-sm sm:text-lg font-semibold text-white">Web/Tech Enthusiast</h3>
+                </div>
+                <div class="reveal-item p-4 sm:p-6 rounded-xl bg-gray-800/70 border border-gray-700/50 text-center hover:shadow-neon glow-on-hover flex flex-col items-center justify-center" style="transition-delay: 0.4s;">
+                    <i class="fas fa-video text-3xl sm:text-4xl neon-text mb-3"></i>
+                    <h3 class="text-sm sm:text-lg font-semibold text-white">Content Creation</h3>
+                </div>
+                <div class="reveal-item p-4 sm:p-6 rounded-xl bg-gray-800/70 border border-gray-700/50 text-center hover:shadow-neon glow-on-hover flex flex-col items-center justify-center" style="transition-delay: 0.5s;">
+                    <i class="fas fa-hands-helping text-3xl sm:text-4xl neon-text mb-3"></i>
+                    <h3 class="text-sm sm:text-lg font-semibold text-white">Leadership</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. PROJECTS SECTION (FEATURING AXTCITY) -->
+    <section id="projects" class="bg-gray-900 reveal-item">
+        <div class="container mx-auto px-4 sm:px-6 max-w-4xl">
+            <h2 class="text-4xl md:text-5xl font-bold mb-12 sm:mb-16 text-center neon-text">Featured Project</h2>
+
+            <!-- AXTCITY FEATURE CARD -->
+            <div class="p-6 md:p-10 rounded-2xl bg-gray-800/70 border border-gray-700/50 reveal-item transform transition-all duration-500 hover:shadow-neon/50" style="transition-delay: 0.1s;">
+                
+                <div class="flex flex-col md:flex-row items-center gap-6 md:gap-8">
+                    <!-- Logo / Image -->
+                    <div class="w-24 h-24 md:w-28 md:h-28 flex-shrink-0 neon-border rounded-full overflow-hidden p-1 bg-white">
+                        <img src="https://cdn.axt.co.in/logo.jpg" alt="Axtcity Logo" class="w-full h-full object-cover rounded-full">
+                    </div>
+
+                    <!-- Text Content -->
+                    <div class="md:text-left text-center flex-grow">
+                        <span class="text-xs font-light text-neon uppercase tracking-wider">Creative Director Role</span>
+                        <h3 class="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-1 text-white">
+                            AxtCity Roleplay
+                        </h3>
+                        <p class="text-base text-gray-300 mb-3">
+                            A Wonderful Roleplay Server Website AxtCity Roleplay.
+                        </p>
+                        <p class="text-sm text-gray-400 font-light italic">
+                            "AxtCity creates a canvas where your story provides the color. Play Behind Reality."
+                        </p>
+                    </div>
+                </div>
+
+                <!-- CTA Button (Larger touch target) -->
+                <div class="mt-6 sm:mt-8 text-center md:text-right">
+                    <a href="https://axtcity.online" target="_blank" rel="noopener noreferrer" class="glow-on-hover inline-flex items-center justify-center px-8 py-3 rounded-xl font-semibold bg-neon-hover text-bg-dark hover:bg-neon-hover border border-neon transition-all duration-300 shadow-lg shadow-neon/50 focus:ring-4 focus:ring-neon/50" aria-label="Visit AxtCity Roleplay Live Site">
+                        <i class="fas fa-external-link-alt mr-2"></i> Visit Live Site
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. LOCATION FEATURE -->
+    <section id="location" class="reveal-item">
+        <div class="container mx-auto px-4 sm:px-6 max-w-4xl text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-8 neon-text">Current Location</h2>
+
+            <div class="p-8 sm:p-10 rounded-2xl bg-gray-800/50 relative overflow-hidden reveal-item" style="transition-delay: 0.2s;">
+                <div class="absolute inset-0 opacity-10 pointer-events-none" style="background: radial-gradient(circle at 75% 25%, var(--primary-accent) 0%, transparent 40%); mix-blend-mode: screen;"></div>
+                
+                <p class="text-2xl sm:text-3xl font-medium text-white mb-2 relative z-10">
+                    <i class="fas fa-map-marker-alt text-neon-hover mr-3"></i> Kannur, Kerala
+                </p>
+                <p class="text-base text-gray-400 relative z-10">— God’s Own Country —</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. CONTACT SECTION -->
+    <section id="contact" class="bg-gray-900 reveal-item">
+        <div class="container mx-auto px-4 sm:px-6 max-w-4xl">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6 text-center neon-text">Get in Touch</h2>
+            <p class="text-lg text-center text-gray-400 mb-10 sm:mb-12 reveal-item" style="transition-delay: 0.2s;">
+                Let’s create something amazing together.
+            </p>
+
+            <div class="bg-gray-800/70 p-6 sm:p-8 rounded-2xl reveal-item" style="transition-delay: 0.4s;">
+                
+                <!-- SUBSCRIPTION LINK -->
+                <div class="text-center mb-6 border-b border-gray-700 pb-6">
+                    <p class="text-base text-gray-300 mb-4 font-medium">Want exclusive updates on my projects?</p>
+                    <a href="subscribe.html" class="glow-on-hover inline-flex items-center justify-center w-full sm:w-auto px-8 py-3 rounded-lg font-semibold bg-transparent text-neon-hover neon-border hover:bg-neon/10 transition-all duration-300 shadow-lg shadow-neon/50 focus:ring-4 focus:ring-neon/50" aria-label="Subscribe to Ebin's Newsletter">
+                        <i class="fas fa-paper-plane mr-2"></i> Subscribe to Newsletter
+                    </a>
+                </div>
+
+                <!-- Functional Contact Form -->
+                <form id="contact-form" class="space-y-4">
+                    <!-- Form Inputs - Full width on all devices, improved focus state -->
+                    <input type="text" id="name" name="name" placeholder="Your Name" class="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 focus:border-neon focus:ring-2 focus:ring-neon transition-colors duration-200" required>
+                    <input type="email" id="email" name="email" placeholder="Your Email" class="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 focus:border-neon focus:ring-2 focus:ring-neon transition-colors duration-200" required>
+                    <textarea id="message" name="message" placeholder="Your Message" rows="4" class="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 focus:border-neon focus:ring-2 focus:ring-neon transition-colors duration-200" required></textarea>
+                    
+                    <!-- Submission Button - Full width on mobile, large touch target -->
+                    <button type="submit" id="submit-button" class="w-full glow-on-hover px-6 py-3 rounded-lg font-semibold bg-neon-hover text-bg-dark hover:bg-neon-hover transition-all duration-300 shadow-lg shadow-neon/50 flex items-center justify-center focus:ring-4 focus:ring-neon/50">
+                        <span id="button-text">Send Message</span>
+                        <div id="loading-spinner" class="spinner ml-3 hidden"></div>
+                    </button>
+
+                    <!-- Message Status Box -->
+                    <div id="status-message" class="hidden p-3 rounded-lg text-center font-medium" role="status" aria-live="polite"></div>
+                </form>
+
+                <!-- Social Icons -->
+                <div class="flex justify-center gap-6 mt-8 sm:mt-10">
+                    <!-- Icons are large for easy tapping -->
+                    <a href="mailto:welco@ebnn.xyz" target="_blank" class="text-3xl text-gray-400 hover:text-neon transition-colors duration-200 glow-on-hover p-2 rounded-full" aria-label="Email Ebin at welco@ebnn.xyz">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <a href="https://www.instagram.com/eb_nnn_?igsh=MWZtaDhxeWJwZGhpMA==" target="_blank" rel="noopener noreferrer" class="text-3xl text-gray-400 hover:text-neon transition-colors duration-200 glow-on-hover p-2 rounded-full" aria-label="Ebin Sebastian Jiji on Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://github.com/JINN0SER0THE0SPY" target="_blank" rel="noopener noreferrer" class="text-3xl text-gray-400 hover:text-neon transition-colors duration-200 glow-on-hover p-2 rounded-full" aria-label="Ebin Sebastian Jiji on GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. FOOTER -->
+    <footer class="bg-bg-dark py-6 sm:py-8 border-t border-gray-800">
+        <div class="container mx-auto px-4 sm:px-6 text-center text-gray-500 text-sm">
+            <p>&copy; 2025 Ebin Sebastian Jiji | <span class="neon-text">ebnn.xyz</span></p>
+            <p class="mt-1">Built with passion from Kerala.</p>
+        </div>
+    </footer>
+
+    <!-- --- JAVASCRIPT FOR ANIMATIONS & LOGIC --- -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // ----------------------------------------------------
+            // 1. Hero Section Entrance Animation
+            // ----------------------------------------------------
+            setTimeout(() => {
+                document.getElementById('hero').classList.add('hero-loaded');
+            }, 100); 
+
+            // ----------------------------------------------------
+            // 2. Typing Effect for About Section
+            // ----------------------------------------------------
+            const textElement = document.getElementById('typing-text');
+            const fullText = "I’m a 12th-grade student passionate about creativity, technology, and digital media.";
+            let i = 0;
+            let speed = 40; 
+
+            function typeWriter() {
+                if (i < fullText.length) {
+                    textElement.innerHTML += fullText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, speed);
+                }
+            }
+
+            // ----------------------------------------------------
+            // 3. Scroll Reveal using Intersection Observer
+            // ----------------------------------------------------
+            const revealItems = document.querySelectorAll('.reveal-item');
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        if (entry.target.id === 'about') {
+                            // Start typing only when the About section is visible for the first time
+                            if (textElement.innerHTML === "") { 
+                                setTimeout(typeWriter, 500); 
+                            }
+                        }
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                rootMargin: '0px',
+                threshold: 0.1 
+            });
+
+            revealItems.forEach(item => {
+                observer.observe(item);
+            });
+
+            // ----------------------------------------------------
+            // 4. Shared Utility Functions (for Contact Form)
+            // ----------------------------------------------------
+
+            // Helper for setting form status messages
+            function setStatus(statusElement, message, isSuccess) {
+                statusElement.textContent = message;
+                statusElement.classList.remove('hidden', 'bg-red-900/50', 'text-red-300', 'bg-green-900/50', 'text-green-300');
+                if (isSuccess) {
+                    statusElement.classList.add('bg-green-900/50', 'text-green-300');
+                } else {
+                    statusElement.classList.add('bg-red-900/50', 'text-red-300');
+                }
+                
+                // Automatically hide the message after a timeout
+                setTimeout(() => {
+                    statusElement.classList.add('hidden');
+                }, 5000);
+            }
+
+            // Helper for setting form state (loading/enabled)
+            function setFormState(button, buttonTextSpan, spinner, isLoading, initialText) {
+                button.disabled = isLoading;
+                if (isLoading) {
+                    buttonTextSpan.textContent = 'Sending...';
+                    spinner.classList.remove('hidden');
+                } else {
+                    buttonTextSpan.textContent = initialText;
+                    spinner.classList.add('hidden');
+                }
+            }
+
+            // Exponential Backoff Fetcher for robust API calls
+            async function fetchWithRetry(url, options, maxRetries = 3) {
+                let lastError = null;
+                for (let i = 0; i < maxRetries; i++) {
+                    try {
+                        const response = await fetch(url, options);
+                        if (!response.ok) {
+                            const errorStatus = response.status;
+                            const errorText = await response.text();
+                            throw { status: errorStatus, text: errorText, isHttpError: true };
+                        }
+                        return response;
+                    } catch (error) {
+                        lastError = error;
+                        // Retry only if it's not the last attempt and not an explicit HTTP error (like 400s/500s) that we handle below
+                        if (error.isHttpError && i < maxRetries - 1) {
+                             // Wait using exponential backoff: 1s, 2s, 4s...
+                            await new Promise(resolve => setTimeout(resolve, Math.pow(2, i) * 1000));
+                        } else if (!error.isHttpError && i < maxRetries - 1) {
+                            // Network error (true exception), retry
+                             await new Promise(resolve => setTimeout(resolve, Math.pow(2, i) * 1000));
+                        }
+                    }
+                }
+                throw lastError;
+            }
+
+            // ----------------------------------------------------
+            // 5. Contact Form Submission Logic
+            // ----------------------------------------------------
+            const contactForm = document.getElementById('contact-form');
+            const contactStatus = document.getElementById('status-message');
+            const contactButton = document.getElementById('submit-button');
+            const contactButtonText = document.getElementById('button-text');
+            const contactSpinner = document.getElementById('loading-spinner');
+            const CONTACT_API_ENDPOINT = '/api/contact'; 
+
+            contactForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                setStatus(contactStatus, '', true); 
+                setFormState(contactButton, contactButtonText, contactSpinner, true, 'Send Message');
+
+                const data = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    message: document.getElementById('message').value,
+                };
+
+                try {
+                    await fetchWithRetry(CONTACT_API_ENDPOINT, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data),
+                    });
+                    
+                    setStatus(contactStatus, "Message sent! Check your inbox for confirmation.", true);
+                    contactForm.reset(); 
+                    
+                } catch (error) {
+                    if (error.isHttpError) {
+                        let errorMessage = `Error ${error.status}: Failed to send message.`;
+                        try {
+                           const errorJson = JSON.parse(error.text);
+                           errorMessage = errorJson.message || errorMessage;
+                        } catch (e) { /* ignore parse error */ }
+                        
+                        setStatus(contactStatus, errorMessage, false);
+                        console.error('Contact API Error Details:', { status: error.status, responseText: error.text });
+                    } else {
+                        setStatus(contactStatus, "Network error. Please check your internet connection.", false);
+                        console.error('Network/Fetch Error:', error);
+                    }
+                } finally {
+                    setFormState(contactButton, contactButtonText, contactSpinner, false, 'Send Message');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
