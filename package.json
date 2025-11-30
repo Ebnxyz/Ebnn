@@ -1,0 +1,13 @@
+{
+  "name": "ebnn-portfolio-backend",
+  "version": "1.0.0",
+  "description": "Dependencies for Ebin Sebastian Jiji's Vercel Serverless Function (api/contact.js) using Resend.",
+  "main": "api/contact.js",
+  "private": true,
+  "scripts": {
+    "start": "echo 'This project is designed for Vercel deployment, not local start.'"
+  },
+  "dependencies": {
+    "resend": "^3.2.0"
+  }
+}
