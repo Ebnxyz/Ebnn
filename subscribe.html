@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Subscribe to Ebin's Newsletter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#0A0A0A">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome (for icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* Define the Neon Blue Theme */
+        :root {
+            --bg-dark: #0A0A0A;
+            --primary-accent: #00BFFF; /* Neon Blue */
+            --secondary-accent: #FFFFFF;
+            --hover-accent: #00E5FF; /* Lighter Neon */
+            --glow-shadow: 0 0 10px var(--primary-accent), 0 0 20px var(--primary-accent);
+        }
+
+        /* Custom Tailwind Configuration (for using custom colors directly) */
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'neon': 'var(--primary-accent)',
+                        'neon-hover': 'var(--hover-accent)',
+                        'bg-dark': 'var(--bg-dark)',
+                    },
+                    boxShadow: {
+                        'neon': 'var(--glow-shadow)',
+                    }
+                }
+            }
+        }
+
+        /* --- GLOBAL STYLES --- */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--secondary-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .glow-on-hover {
+            transition: all 0.3s ease;
+            box-shadow: none;
+            will-change: transform, box-shadow;
+        }
+
+        .glow-on-hover:hover {
+            background-color: rgba(0, 191, 255, 0.1);
+            box-shadow: var(--glow-shadow);
+            transform: translateY(-2px);
+        }
+        
+        .neon-text {
+            color: var(--primary-accent);
+            text-shadow: 0 0 2px var(--primary-accent);
+        }
+
+        /* Custom Spinner for Button */
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            width: 1.5rem;
+            height: 1.5rem;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-bg-dark text-white">
+
+    <div class="w-full max-w-lg mx-auto">
+        <div class="bg-gray-900/90 p-8 sm:p-12 rounded-2xl border border-gray-800 shadow-2xl shadow-neon/20">
+            
+            <a href="index.html#contact" class="text-neon-hover text-sm mb-4 inline-block hover:underline">
+                <i class="fas fa-arrow-left mr-2"></i> Back to Portfolio
+            </a>
+
+            <div class="text-center mb-10">
+                <img src="https://ebnn.xyz/pfp.png" 
+                     alt="Ebin Sebastian Jiji Profile Photo" 
+                     onerror="this.onerror=null;this.src='https://placehold.co/80x80/000/fff?text=E';" 
+                     class="w-20 h-20 rounded-full mx-auto mb-4 border-2 border-neon">
+                
+                <h1 class="text-3xl sm:text-4xl font-extrabold neon-text mb-2">
+                    Join the Journey
+                </h1>
+                <p class="text-lg text-gray-400">
+                    Get my latest insights on technology, creative direction, and projects.
+                </p>
+            </div>
+
+            <!-- Newsletter Form -->
+            <form id="subscribe-form" class="flex flex-col gap-4">
+                <input type="email" id="subscribe-email" name="email" placeholder="Enter Your Email Address" class="w-full p-4 rounded-lg bg-gray-700 border border-gray-600 focus:border-neon focus:ring-1 focus:ring-neon transition-colors duration-200 text-lg" required>
+                
+                <button type="submit" id="subscribe-button" class="w-full glow-on-hover px-6 py-4 rounded-lg font-semibold bg-neon-hover text-bg-dark hover:bg-neon-hover transition-all duration-300 shadow-lg shadow-neon/50 flex items-center justify-center text-lg">
+                    <span id="subscribe-button-text">Subscribe Now</span>
+                    <div id="subscribe-loading-spinner" class="spinner ml-3 hidden"></div>
+                </button>
+            </form>
+
+            <!-- Subscription Status Box -->
+            <div id="subscribe-status-message" class="hidden mt-6 p-4 rounded-lg text-center font-medium" role="status"></div>
+        </div>
+    </div>
+
+
+    <!-- --- JAVASCRIPT LOGIC --- -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const subscribeForm = document.getElementById('subscribe-form');
+            const subscribeStatus = document.getElementById('subscribe-status-message');
+            const subscribeButton = document.getElementById('subscribe-button');
+            const subscribeButtonText = document.getElementById('subscribe-button-text');
+            const subscribeSpinner = document.getElementById('subscribe-loading-spinner');
+            const SUBSCRIBE_API_ENDPOINT = '/api/subscribe'; 
+
+            // Helper for setting form status messages
+            function setStatus(statusElement, message, isSuccess) {
+                statusElement.textContent = message;
+                statusElement.classList.remove('hidden', 'bg-red-900/50', 'text-red-300', 'bg-green-900/50', 'text-green-300');
+                if (isSuccess) {
+                    statusElement.classList.add('bg-green-900/50', 'text-green-300');
+                } else {
+                    statusElement.classList.add('bg-red-900/50', 'text-red-300');
+                }
+                
+                setTimeout(() => {
+                    statusElement.classList.add('hidden');
+                }, 5000);
+            }
+
+            // Helper for setting form state (loading/enabled)
+            function setFormState(button, buttonTextSpan, spinner, isLoading, initialText) {
+                button.disabled = isLoading;
+                if (isLoading) {
+                    buttonTextSpan.textContent = 'Processing...';
+                    spinner.classList.remove('hidden');
+                } else {
+                    buttonTextSpan.textContent = initialText;
+                    spinner.classList.add('hidden');
+                }
+            }
+
+            // Exponential Backoff Fetcher
+            async function fetchWithRetry(url, options, maxRetries = 3) {
+                let lastError = null;
+                for (let i = 0; i < maxRetries; i++) {
+                    try {
+                        const response = await fetch(url, options);
+                        if (!response.ok) {
+                            const errorStatus = response.status;
+                            const errorText = await response.text();
+                            throw { status: errorStatus, text: errorText, isHttpError: true };
+                        }
+                        return response;
+                    } catch (error) {
+                        lastError = error;
+                        if (error.isHttpError || i < maxRetries - 1) {
+                            await new Promise(resolve => setTimeout(resolve, Math.pow(2, i) * 1000));
+                        }
+                    }
+                }
+                throw lastError;
+            }
+
+            // Newsletter Form Submission Logic
+            subscribeForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                setStatus(subscribeStatus, '', true); 
+                setFormState(subscribeButton, subscribeButtonText, subscribeSpinner, true, 'Subscribe Now');
+
+                const emailValue = document.getElementById('subscribe-email').value;
+                const data = { email: emailValue };
+
+                try {
+                    const response = await fetchWithRetry(SUBSCRIBE_API_ENDPOINT, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data),
+                    });
+                    
+                    const responseBody = await response.json();
+
+                    // Check if the subscription was new (201) or a duplicate (200)
+                    if (response.status === 201 || response.status === 200) {
+                         setStatus(subscribeStatus, responseBody.message, true);
+                    } else {
+                         setStatus(subscribeStatus, "Subscription processed successfully.", true);
+                    }
+                    
+                    subscribeForm.reset(); 
+                    
+                } catch (error) {
+                    if (error.isHttpError) {
+                        let errorBodyText = error.text;
+                        try {
+                           const errorJson = JSON.parse(error.text);
+                           errorBodyText = errorJson.message || error.text;
+                        } catch (e) { /* ignore parse error */ }
+                        
+                        let errorMessage = `Error ${error.status}: ${errorBodyText}`;
+                        setStatus(subscribeStatus, errorMessage, false);
+                        console.error('Subscribe API Error Details:', { status: error.status, responseText: error.text });
+                    } else {
+                        setStatus(subscribeStatus, "Network error. Could not connect to the subscription service.", false);
+                    }
+                } finally {
+                    setFormState(subscribeButton, subscribeButtonText, subscribeSpinner, false, 'Subscribe Now');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
