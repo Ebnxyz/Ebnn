@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Suspended — AxtCloud Notification</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #111827;
+        }
+        .classic-card {
+            background: #ffffff;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <main class="flex-grow flex items-center justify-center px-6 py-12">
+        <div class="max-w-xl w-full classic-card rounded-lg overflow-hidden">
+            
+            <div class="bg-red-600 px-8 py-4 flex items-center justify-between">
+                <span class="text-white font-bold tracking-widest text-sm uppercase">Administrative Notice</span>
+                <i class="fas fa-server text-white/80"></i>
+            </div>
+
+            <div class="p-8 md:p-10 text-center">
+                <h1 class="text-3xl font-bold text-gray-900 mb-4">Thank You For Visiting</h1>
+                
+                <p class="text-gray-600 text-lg leading-relaxed mb-6">
+                    This page has been <span class="text-red-600 font-bold uppercase">terminated</span> due to non-payment. If you are the owner, please complete your payment to restore service.
+                </p>
+
+                <div class="bg-red-50 border-l-4 border-red-600 p-5 mb-8 text-left">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-triangle-exclamation text-red-600 mr-2"></i>
+                        <span class="text-red-800 font-bold text-sm uppercase">Immediate Action Required</span>
+                    </div>
+                    <p class="text-red-700 text-sm leading-snug mb-3">
+                        If payment is not completed within <strong>48 hours</strong>, all your data will be <strong>permanently deleted</strong>. No backup or restore options will be available.
+                    </p>
+                    <p class="text-xs text-red-900 font-semibold italic">
+                        Disclaimer: AxtCloud is not responsible for any data loss resulting from non-payment or account termination.
+                    </p>
+                </div>
+
+                <div class="bg-gray-50 rounded-lg p-6 mb-8 border border-gray-100">
+                    <p class="text-sm text-gray-500 mb-4 font-medium uppercase tracking-tight">Account Recovery</p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="https://go.axt.co.in" target="_blank" class="bg-gray-900 text-white px-6 py-3 rounded font-semibold hover:bg-gray-800 transition-all shadow-md">
+                            Renew & Upgrade
+                        </a>
+                        <a href="mailto:support@axt.co.in" class="bg-white text-gray-900 border border-gray-300 px-6 py-3 rounded font-semibold hover:bg-gray-50 transition-all shadow-sm">
+                            Contact Support
+                        </a>
+                    </div>
+                </div>
+
+                <div class="text-left border-t border-gray-100 pt-6 space-y-2">
+                    <p class="text-[10px] text-gray-400 font-mono uppercase tracking-widest">
+                        Source Id: AXT-04-X98R2K4L
+                    </p>
+                    <p class="text-[10px] text-gray-400 font-mono">
+                        Hostname: axt-04-x98r2k4l.edge-knr.axtclouduser.com
+                    </p>
+                    <p class="text-[10px] text-gray-400 font-mono">
+                        Datacenter: AxtCloud Data Center (KNR)
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-10 text-center px-4">
+        <p class="text-gray-500 text-xs mb-2">
+            This error has been auto-generated due to non-clearing of payment.
+        </p>
+        <p class="text-gray-400 text-sm font-medium tracking-wide">
+            Powered by <span class="text-gray-600 font-bold">AxtCloud</span>
+        </p>
+    </footer>
+
+</body>
+</html>
