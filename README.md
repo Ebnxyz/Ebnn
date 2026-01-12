@@ -1,2 +1,2 @@
-# Ebnn
-Digital Space of Ebn
+### Ebnn
+**Digital Space of Ebn**
