@@ -241,15 +241,6 @@ export default function Home() {
 
                     <div className="bg-gray-800/70 p-8 rounded-2xl">
 
-                        {/* SUBSCRIPTION LINK */}
-                        <div className="text-center mb-8 border-b border-gray-700 pb-6">
-                            <p className="text-base text-gray-300 mb-4">Want updates on my projects?</p>
-                            {/* Note: subscribe page was separate, we can keep it or modal-ize it. Keeping separate for now. */}
-                            <a href="/subscribe" className="glow-on-hover px-8 py-3 rounded-lg font-semibold bg-transparent text-neon-hover neon-border hover:bg-neon/10 transition-all duration-300 shadow-lg shadow-neon/50 inline-block">
-                                <i className="fas fa-paper-plane mr-2"></i> Subscribe to Newsletter
-                            </a>
-                        </div>
-
                         {/* Functional Contact Form */}
                         <form onSubmit={handleContactSubmit} className="space-y-4">
                             <input type="text" name="name" placeholder="Your Name" className="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 focus:border-neon focus:ring-1 focus:ring-neon transition-colors duration-200" required />
