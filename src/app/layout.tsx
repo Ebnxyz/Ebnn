@@ -1,31 +1,35 @@
-import type { Metadata } from 'next';
-import { Poppins } from 'next/font/google';
-import './globals.css';
+import type { Metadata } from "next";
+import { Outfit, JetBrains_Mono } from "next/font/google";
+import "./globals.css";
 
-const poppins = Poppins({
-    subsets: ['latin'],
-    weight: ['300', '400', '500', '600', '700', '800'],
-    variable: '--font-poppins',
+const outfit = Outfit({
+    subsets: ["latin"],
+    variable: '--font-outfit',
+    display: 'swap',
+});
+
+const jetbrainsMono = JetBrains_Mono({
+    subsets: ["latin"],
+    variable: '--font-mono',
     display: 'swap',
 });
 
 export const metadata: Metadata = {
-    title: 'Ebin Sebastian Jiji — Student, Creative Director & Innovator',
-    description: 'Portfolio of Ebin Sebastian Jiji, a 12th-grade student and Creative Director from Kannur, Kerala.',
-    keywords: ['Ebin Sebastian Jiji', 'Portfolio', 'Creative Director', 'Kannur', 'Kerala', 'Web Developer'],
+    title: "THE EBNN | Ebin Sebastian",
+    description: "EBNN Digital Ecosystem & Subscription Uplink",
 };
 
 export default function RootLayout({
     children,
-}: {
+}: Readonly<{
     children: React.ReactNode;
-}) {
+}>) {
     return (
-        <html lang="en">
+        <html lang="en" className="scroll-smooth">
             <head>
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+                <script src="https://unpkg.com/lucide@latest"></script>
             </head>
-            <body className={`${poppins.variable} font-sans bg-bg-dark text-white overflow-x-hidden`}>
+            <body className={`${outfit.variable} ${jetbrainsMono.variable} font-sans bg-bg-dark text-slate-100 antialiased overflow-x-hidden selection:bg-blue-500/30`}>
                 {children}
             </body>
         </html>

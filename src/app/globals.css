@@ -3,45 +3,87 @@
 @tailwind utilities;
 
 :root {
-  --bg-dark: #0A0A0A;
-  --primary-accent: #00BFFF; /* Neon Blue */
-  --secondary-accent: #FFFFFF;
-  --hover-accent: #00E5FF; /* Lighter Neon */
-  --glow-shadow: 0 0 10px var(--primary-accent), 0 0 20px var(--primary-accent);
-  --text-glow: 0 0 2px var(--primary-accent);
+  --primary: #3B82F6;
+  --bg-dark: #020617;
+  --card-bg: rgba(15, 23, 42, 0.4);
 }
 
 body {
   background-color: var(--bg-dark);
-  color: var(--secondary-accent);
+  color: #F1F5F9;
 }
 
-/* Custom Utilities */
-.neon-text {
-  color: var(--primary-accent);
-  text-shadow: var(--text-glow);
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
 }
 
-.neon-border {
-  border: 1px solid var(--primary-accent);
-  box-shadow: 0 0 5px var(--primary-accent) inset;
+::-webkit-scrollbar-track {
+  background: #020617;
 }
 
-/* Animations */
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 10px;
 }
 
-.animate-spin-slow {
-  animation: spin 3s linear infinite;
+::-webkit-scrollbar-thumb:hover {
+  background: #3B82F6;
 }
 
-.animate-pulse-slow {
-  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+/* Utilities */
+.glass {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-@keyframes pulse {
-  0%, 100% { opacity: 0.1; }
-  50% { opacity: 0.05; }
+.bento-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.bento-card:hover {
+  border-color: rgba(59, 130, 246, 0.5);
+  transform: translateY(-8px) scale(1.01);
+  background: rgba(15, 23, 42, 0.7);
+  box-shadow: 0 20px 40px -20px rgba(59, 130, 246, 0.3);
+}
+
+.reveal-item {
+  opacity: 0;
+  transform: translateY(40px) scale(0.95);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.reveal-item.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.animated-gradient-text {
+  background: linear-gradient(90deg, #3B82F6, #8B5CF6, #06B6D4, #3B82F6);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 6s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
