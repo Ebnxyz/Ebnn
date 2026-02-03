@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-dark: #0A0A0A;
+  --primary-accent: #00BFFF; /* Neon Blue */
+  --secondary-accent: #FFFFFF;
+  --hover-accent: #00E5FF; /* Lighter Neon */
+  --glow-shadow: 0 0 10px var(--primary-accent), 0 0 20px var(--primary-accent);
+  --text-glow: 0 0 2px var(--primary-accent);
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--secondary-accent);
+}
+
+/* Custom Utilities */
+.neon-text {
+  color: var(--primary-accent);
+  text-shadow: var(--text-glow);
+}
+
+.neon-border {
+  border: 1px solid var(--primary-accent);
+  box-shadow: 0 0 5px var(--primary-accent) inset;
+}
+
+/* Animations */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin 3s linear infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.05; }
+}
